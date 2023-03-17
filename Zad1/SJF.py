@@ -4,16 +4,17 @@ from Algorythm import Algorythm
 from Request import Request
 
 
-class FCFS(Algorythm):
+class FCFS2(Algorythm):
     def __init__(self):
-        super().__init__("FCFS")
+        super().__init__("SJF")
 
     def __repr__(self):
 
         return "{}: {}".format(self.__class__.__name__, vars(self))
 
     def work(self):
-        if self.GlobalCurrentTick == 0:
+        if self.tasklist!=[]:
+
             self.tasklist = sorted(list(self.tasklist), key=functools.cmp_to_key(self.compare))
             self.CPR=self.tasklist[0]
         if len(self.tasklist)==1:
@@ -51,9 +52,9 @@ class FCFS(Algorythm):
             print("List empty!")
 
     def compare(self, item1: Request, item2: Request):
-        if item1.arrive_time > item2.arrive_time:
+        if item1.processing_time > item2.processing_time:
             return 1
-        elif item1.arrive_time == item2.arrive_time:
+        elif item1.processing_time == item2.processing_time:
             return 0
         else:
             return -1

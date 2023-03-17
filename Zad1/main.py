@@ -1,4 +1,5 @@
-from Processor import  Processing
+from Processor import  ProcessingAll
 from FCFS import FCFS
+from SJF import FCFS2
 
-Processing(FCFS())
+ProcessingAll([FCFS(),FCFS2()])
