@@ -44,7 +44,7 @@ class FCFS(Algorythm):
                 self.CPR.overall_time += 1
                 for cpr in self.tasklist[1:]:
                     cpr.waiting_time_till_start += 1
-                    cpr.overall_time += 1
+
             print("After tick:")
             print(self.CPR)
             print(f'SwitchCounter: {self.SwitchCounter}')

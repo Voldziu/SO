@@ -8,6 +8,9 @@ import seaborn as sns
 from FCFS import FCFS
 from Request import Request
 
+from FCFS import FCFS
+from SJF import SJF
+from RR import RR
 
 
 
@@ -127,24 +130,57 @@ def ProcessingAll(AlgList:list):
 
         GlobalCurrentTick+=1
 
+
+
     DFList=[]
+    SwitchCounterList=[]
+    NameList=[]
     for alg in AlgList:
+        NameList.append(alg.name)
+        SwitchCounterList.append(alg.SwitchCounter)
+
+
 
 
         DFList+=alg.FinishedCPRList
-    df = pd.DataFrame.from_records(vars(o) for o in DFList)
-    column_list= list(df[["processing_time","waiting_time_till_start","overall_time"]].columns)
+
+    cprdata = pd.DataFrame.from_records(vars(o) for o in DFList)
+    SwitchCounterDict = {'Alg_Name': NameList,'No_of_switches': SwitchCounterList}
+
+
+
+
+    Switchdata=pd.DataFrame.from_dict(data=SwitchCounterDict)
+    return [cprdata,Switchdata]
+
+
+
+
+
+def ShowData():
+    datalist=ProcessingAll([SJF(),FCFS(),RR(10)])
+    df=datalist[0]
+    Switchdata=datalist[1]
+    print(Switchdata)
+    print(df)
+    column_list = list(df[["processing_time", "waiting_time_till_start", "overall_time"]].columns)
     print(df.columns)
     print(column_list)
-    fig, axes = plt.subplots(1,3,figsize=(20,10))
+    fig, axes = plt.subplots(4, 3, figsize=(28, 12))
+
+    sns.violinplot(data=df, x="algname", y="waiting_time_till_start", ax=axes[0,0])
+    sns.violinplot(data=df, x="algname", y="overall_time", ax=axes[0,1])
+    sns.violinplot(data=df, x="algname", y="processing_time", ax=axes[0,2])
+
+
+    sns.histplot(data=df,x="waiting_time_till_start",hue="algname",ax=axes[1,0],kde=True)
+    sns.histplot(data=df, x="overall_time", hue="algname", ax=axes[1,1],kde=True)
+    sns.histplot(data=df, x="processing_time", hue="algname", ax=axes[1, 2],kde=True)
+
+    sns.histplot(data=Switchdata,x="Alg_Name",y="No_of_switches",ax=axes[2,0])
 
 
 
-    sns.violinplot(data=df, x="algname", y="waiting_time_till_start", ax=axes[0])
-    sns.violinplot(data=df, x="algname", y="overall_time", ax=axes[1])
-    sns.violinplot(data=df,x="algname",y="processing_time",ax=axes[2])
-
-    # sns.histplot(data=df,x="processing_time",hue="algname")
     plt.show()
 
 

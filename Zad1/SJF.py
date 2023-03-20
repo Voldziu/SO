@@ -50,7 +50,7 @@ class SJF(Algorythm):
                 for cpr in self.tasklist[1:]:
                     if(cpr.state=="waiting"):
                         cpr.waiting_time_till_start += 1
-                        cpr.overall_time += 1
+
                     else:
                         cpr.overall_time+=1
             print("After tick:")

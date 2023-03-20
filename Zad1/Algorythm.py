@@ -13,6 +13,7 @@ class Algorythm:
 
 
 
+
     def work(self):
         pass
     def initialize(self):
