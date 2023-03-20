@@ -11,14 +11,16 @@ class FCFS(Algorythm):
     def __repr__(self):
 
         return "{}: {}".format(self.__class__.__name__, vars(self))
+    def initialize(self):
+        self.tasklist=sorted(list(self.tasklist),key=functools.cmp_to_key(self.compare))
+        self.CPR=self.tasklist[0]
+        self.CPR.state = "being processed"
 
     def work(self):
-        if self.GlobalCurrentTick == 0:
-            self.tasklist = sorted(list(self.tasklist), key=functools.cmp_to_key(self.compare))
-            self.CPR=self.tasklist[0]
+
         if len(self.tasklist)==1:
             self.CPR = self.tasklist[0]
-            self.CPR.state = "started"
+            self.CPR.state = "being processed"
         print("Before tick:")
         print()
         print(self.CPR)
@@ -33,7 +35,7 @@ class FCFS(Algorythm):
                 self.FinishedCPRList.append(self.CPR)
                 if (self.tasklist != []):
                     self.CPR = self.tasklist[0]
-                    self.CPR.state = "started"
+                    self.CPR.state = "being processed"
 
 
 

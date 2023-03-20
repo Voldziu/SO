@@ -13,5 +13,7 @@ class Algorythm:
 
 
 
-    def work(self,InitialRequest:list,TickLimit:int,GlobalCurrentTick:int, SwitchCounter:int,CPR: Request,FinishedCPRlist:list):
+    def work(self):
+        pass
+    def initialize(self):
         pass

@@ -49,7 +49,7 @@ def Processing(algorythm:Algorythm):
     tasklist = [Request(1, "lol", 4, 10, "waiting",algorythm.name), Request(2, "lol", 3, 10, "waiting",algorythm.name),
                 Request(3, "lol", 2, 1, "waiting",algorythm.name)]
     SwitchCounter=0
-    TickLimit = 1000
+    TickLimit = 100
     GlobalCurrentTick = 0
     CPR:Request=Request(0,0,0,0,0,"name")
     FinishedCPRList=[]
@@ -58,7 +58,7 @@ def Processing(algorythm:Algorythm):
 
     while GlobalCurrentTick<TickLimit:
         print(GlobalCurrentTick)
-        if (NewTaskArrivalBoolean(0.95)):
+        if (NewTaskArrivalBoolean(0.01)):
             NewTaskArrival(ID,algorythm.name, tasklist, 1)
             ID+=1
         algorythm.work()
@@ -82,7 +82,7 @@ def Processing(algorythm:Algorythm):
 
 
 def ProcessingAll(AlgList:list):
-    TickLimit = 1000000
+    TickLimit = 10**5
     GlobalCurrentTick = 0
     Switchcounter = 0
     FinishedCPRList=[]
@@ -90,32 +90,33 @@ def ProcessingAll(AlgList:list):
 
     for alg in AlgList:  # Initializing
 
-        alg.tasklist = [Request(1, "lol", 4, 10, "waiting", alg.name),
+        alg.tasklist = [Request(1, "lol", 4, 30, "waiting", alg.name),
                     Request(2, "lol", 3, 10, "waiting", alg.name),
                     Request(3, "lol", 2, 1, "waiting", alg.name)]
         alg.GlobalCurrentTick=GlobalCurrentTick
         alg.SwitchCounter=Switchcounter
         alg.FinishedCPRList=FinishedCPRList
-
-        alg.work()
-
+        alg.initialize()
 
 
-    GlobalCurrentTick+=1
+
+
+
+
 
     ID= len(AlgList[0].tasklist)+1
 
     while GlobalCurrentTick<TickLimit:
         print(GlobalCurrentTick)
 
-        NewTaskBoolean = NewTaskArrivalBoolean(0.96)
+        NewTaskBoolean = NewTaskArrivalBoolean(0.95)
 
 
           # TO DO: wspolbiezne dzialanie algorytmow
 
         if(NewTaskBoolean):
             for alg in AlgList:
-                NewTaskArrival(ID,alg.name,alg.tasklist,1)
+                NewTaskArrival(ID,alg.name,alg.tasklist,2)
             ID+=1     
         for alg in AlgList:
 
