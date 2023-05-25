@@ -1,0 +1,55 @@
+1. Blad strony, gdy nie ma obecnego procesu w pamieci (gdy dodajemy)
+2. Generowanie odwołań: przez pewien określony czas proces odwołuje się do określonego podzbioru.
+Można fajny wykresik zrobić. Lokalnosc -> losowe -> lokalnosc->losowe->lokalnosc
+Wielkosc pozbioru (max 1/2)
+3. Algorytmy:
+    FIFO:
+    RAND:
+    OPT: patrze dla kazdej strony w pamieci, za ile bede musial sie do niej odwolac. Usuwam tę, do której bede sie musial odwolac najpozniej.
+    LRU:
+    ALRU: (ALGORYTM ZEGAROWY)
+
+    Algorytm ostatniej szansy. Kazdy proces ma bit ostatniej szansy 1, gdy algorytm po nim przechodzi, traci te 1. Gdy wszystkie przejdzie, a nie znajdzie, to przechoszi jeszcze raz.
+    Gdy jest odwolanie do procesu, ktorego bit jest 0, odswiezamy go do 1.
+
+
+
+
+
+
+
+4. zadanie:
+    1. ciagi odwolan dla procesow są rozłączne
+    2. ciag globalny
+    algorytmy:
+
+    1. dzielenie proporcjonalne/rowne
+    2. sterowanie czestoscia bledow strony. Obserwowanie wystepowan bledow strony. Jak to zmierzyc? DeltaT, dla deltaT procesow ile bledow strony dostalismy. H, L . Jezeli proces generuje >H, to trzeba mu przydzielic ramke, jezeli <L, mozna mu odjac. Jezeli nie da sie dodac,
+    to trzeba wstrzymac proces. Kiedy wznawiamy? Mozna po stalym czasie, mozna, gdy ramka zostanie zwolniona. Krytyczna wartosc c -
+    przy przekroczeniu H, proces powinien ja dostac, ale dalej pracuje. Gdy przekroczy C, jest wstrzymywany. Gdy wstrzymujemy proces, zwalniamy jego ramki.
+    Odfreezowujemy go, gdy wolne jest N+1 ramek. (N- wstrzymane ramki).
+
+    FILTROWAC globalna kolejke, wyfiltrowywac odwolania od procesow ktore sa wstrzymane.
+
+     trzeba robic tak, zeby przedzialy delta T się zazębiały. O 2 odwolania, 3.
+
+
+
+
+
+     3. Model strefowy
+     WSS - Working Set Size
+     Badamy co delta T ile stron zostalo wykorzystanych. to sie rowna WSS.
+
+     D= suma po zbiorach roboczych wszystkich procesow.
+
+     Jezeli D<N, gdzie N - liczba ramek w systemie. To dajemy procesom na kolejne
+
+     Jak przekraczamy D, to freezujemy proces. Jakiś lub jakieś, trzeba coś wybrać.Mniej wstrzymanych procesow to lepiej.
+
+
+
+
+     Ogolne:
+     Ile procesow? 10 pracujacych procesow w danym czasie. Liczba odwolan w procesie kilka tysiecy. Ramek kilkadziesiat.
+     Konczymy wtedy, gdy skonczy sie ciag odwolan.

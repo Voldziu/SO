@@ -44,10 +44,17 @@ class RR(Algorythm):
                         task.overall_time += 1
                 self.j+=1
             else:
-                if(self.CPR.timeleft==0):
-                    self.CPR.state='finished'
-                    self.tasklist.remove(self.CPR)
-                    self.FinishedCPRList.append(self.CPR)
+                if(self.CPR.timeleft==0 ):
+                    if(self.CPR.state!="finished"):
+                        self.CPR.state = 'finished'
+                        self.tasklist.remove(self.CPR)
+                        self.FinishedCPRList.append(self.CPR)
+
+
+
+
+
+
                 else:
 
                     self.CPR.state="abandonded"

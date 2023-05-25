@@ -39,7 +39,7 @@ def RandomTaskLength(mean, std):
 
 
 def NewTaskArrivalBoolean(k):
-    if random.random() >= k:
+    if random.random() <= k:
         return True
     else:
         return False
@@ -84,8 +84,8 @@ def Processing(algorythm:Algorythm):
 
 
 
-def ProcessingAll(AlgList:list):
-    TickLimit = 10**5
+def ProcessingAll(AlgList:list,k:int,tasklenlevel:int, TickLimit:int,):
+
     GlobalCurrentTick = 0
     Switchcounter = 0
     FinishedCPRList=[]
@@ -112,14 +112,14 @@ def ProcessingAll(AlgList:list):
     while GlobalCurrentTick<TickLimit:
         print(GlobalCurrentTick)
 
-        NewTaskBoolean = NewTaskArrivalBoolean(0.95)
+        NewTaskBoolean = NewTaskArrivalBoolean(k)
 
 
           # TO DO: wspolbiezne dzialanie algorytmow
 
         if(NewTaskBoolean):
             for alg in AlgList:
-                NewTaskArrival(ID,alg.name,alg.tasklist,2)
+                NewTaskArrival(ID,alg.name,alg.tasklist,tasklenlevel)
             ID+=1     
         for alg in AlgList:
 
@@ -158,7 +158,12 @@ def ProcessingAll(AlgList:list):
 
 
 def ShowData():
-    datalist=ProcessingAll([SJF(),FCFS(),RR(10)])
+    k=0.05
+    tasklenlevel=2
+    kRR=10
+    TickLimit=10**5
+
+    datalist=ProcessingAll([SJF(),FCFS(),RR(kRR)],k,tasklenlevel,TickLimit)
     df=datalist[0]
     Switchdata=datalist[1]
     print(Switchdata)
@@ -166,18 +171,55 @@ def ShowData():
     column_list = list(df[["processing_time", "waiting_time_till_start", "overall_time"]].columns)
     print(df.columns)
     print(column_list)
+    df_means = df.groupby("algname").agg("mean").reset_index()
+    print(df_means)
+    df_means_waitingtime=df_means["waiting_time_till_start"]
+    df_means_overalltime=df_means["overall_time"]
+
+    print(df_means_waitingtime)
+    print(df_means_overalltime)
     fig, axes = plt.subplots(4, 3, figsize=(28, 12))
+    fig.suptitle(f'New Task Probability: {k}    TickLimit: {TickLimit}     RR Time Quant: {kRR}     TaskLengthLevel: {tasklenlevel}',fontsize=32)
+    order= ['FCFS','RR','SJF']
 
-    sns.violinplot(data=df, x="algname", y="waiting_time_till_start", ax=axes[0,0])
-    sns.violinplot(data=df, x="algname", y="overall_time", ax=axes[0,1])
-    sns.violinplot(data=df, x="algname", y="processing_time", ax=axes[0,2])
+    sns.violinplot(data=df, x="algname", y="waiting_time_till_start", ax=axes[0,0],order=order)
+    sns.scatterplot(data=df_means_waitingtime,marker="X", color="red",s=100,ax=axes[0,0])
+    axes[0,0].set_yscale('log')
+    axes[0,0].grid()
+    sns.violinplot(data=df, x="algname", y="overall_time", ax=axes[0,1],order=order)
+    sns.scatterplot(data=df_means_overalltime, marker="X", color="red", s=100, ax=axes[0, 1])
+    axes[0, 1].set_yscale('log')
+    axes[0, 1].grid()
+    sns.violinplot(data=df, x="algname", y="processing_time", ax=axes[0,2],order=order)
+
+    axes[0, 2].grid()
+
+    sns.boxplot(data=df, x="algname", y="waiting_time_till_start", ax=axes[1, 0],order=order)
+    sns.scatterplot(data=df_means_waitingtime, marker="X", color="red", s=100, ax=axes[1, 0])
+    axes[1, 0].set_yscale('log')
+    axes[1,0].grid()
+    sns.boxplot(data=df, x="algname", y="overall_time", ax=axes[1, 1],order=order)
+    sns.scatterplot(data=df_means_overalltime, marker="X", color="red", s=100, ax=axes[1,1])
+    axes[1,1].set_yscale('log')
+    axes[1,1].grid()
+    sns.boxplot(data=df, x="algname", y="processing_time", ax=axes[1, 2],order=order)
+
+    axes[1, 2].grid()
 
 
-    sns.histplot(data=df,x="waiting_time_till_start",hue="algname",ax=axes[1,0],kde=True)
-    sns.histplot(data=df, x="overall_time", hue="algname", ax=axes[1,1],kde=True)
-    sns.histplot(data=df, x="processing_time", hue="algname", ax=axes[1, 2],kde=True)
 
-    sns.histplot(data=Switchdata,x="Alg_Name",y="No_of_switches",ax=axes[2,0])
+    sns.histplot(data=df,x="waiting_time_till_start",hue="algname",ax=axes[2,0],bins=25,hue_order=order,multiple="stack")
+    sns.histplot(data=df, x="overall_time", hue="algname", ax=axes[2,1],bins=25,hue_order=order,multiple="stack")
+    sns.histplot(data=df, x="processing_time", hue="algname", ax=axes[2, 2],hue_order=order,multiple="stack")
+
+
+
+
+
+
+
+    sns.barplot(data=Switchdata,x="Alg_Name",y="No_of_switches",ax=axes[3,0],order=order)
+    sns.histplot(data=df,x="algname",ax=axes[3,1])
 
 
 
