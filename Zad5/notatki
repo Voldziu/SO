@@ -1,0 +1,14 @@
+1. Ogolne:
+
+
+2. Generator
+
+3. Algorytm A (leniwy student debil):
+    1. proces pojawia sie na cpu (losowo)
+    2. odpytuje sasiadow o obciazenie
+    3. za wszelka cene spycham na innych
+    4. overloading mozna jakos flagowac
+3. Alg B (ambitny student)
+    1. to samo, ale na poczatku sprawdza sie siebie.
+    2. wszystkich sie pytamy, zamiast z razy
+

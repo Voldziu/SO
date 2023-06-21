@@ -10,7 +10,7 @@ from Re import Req1
 
 
 def ProcessParalelly(AlgList: list[Algorythm],n:int,p:float,leng:int,ramki:int,szamotuly:int):
-    globallist= generate(generatelist(n,p,leng))[1]
+    globallist= generate(generatelist(0,n,p,leng))[1]
    # u =[9, 9, 9, 3, 9, 4, 4, 3, 3, 4, 4, 4, 1, 8, 4, 8, 4, 4, 4, 1, 8, 1, 2, 6, 6, 2, 7, 2, 7, 7, 6, 7, 2, 6, 8, 6, 8, 8, 8, 3, 8, 6, 3, 8, 8, 2, 8, 8, 4, 8, 4, 4, 8, 4, 4, 5, 7, 5, 3, 7, 5, 5, 7, 3, 3, 3, 2, 1, 1, 1, 2, 1, 6, 1, 2, 1, 2, 2, 8, 3, 8, 3, 3, 3, 8, 8, 2, 2, 7, 7, 7, 6, 9, 6, 9, 7, 7, 7, 7, 2, 5, 3, 5, 5, 3, 5, 3, 3, 3, 2, 3, 9, 9, 9, 3, 9, 3, 3, 7, 7, 9, 6, 5, 2, 6, 6, 2, 2, 5, 6, 6, 5, 7, 7, 8, 7, 8, 8, 8, 5, 8, 5, 5, 5, 8, 8, 8, 5, 8, 5, 4, 8, 8, 4, 9, 9, 2, 9, 2, 7, 7, 9, 7, 2, 9, 3, 9, 1, 3, 9, 3, 9, 1, 3, 3]
     #globallist=generate(u)[1]
     #initialize
@@ -63,4 +63,9 @@ def ProcessParalelly(AlgList: list[Algorythm],n:int,p:float,leng:int,ramki:int,s
 
 
     return [dflist,bledylist,ListaBitowa,Szamotuly]
+
+
+
+
+
 

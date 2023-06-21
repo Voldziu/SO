@@ -5,6 +5,20 @@ import pandas as pd
 
 from Re import Req1
 
+import random
+
+def distribute_elements(N, M):
+    pots = [0] * M  # Initialize pots with zero elements
+
+    # Distribute N elements randomly
+    for _ in range(N):
+        pot_index = random.randint(0, M - 1)
+        pots[pot_index] += 1
+
+    return pots
+
+
+
 
 def generate(lista:list[int]):
     a:list[Req1]=[]
@@ -20,9 +34,9 @@ def generate(lista:list[int]):
 
 
 
-def generatelist(n:int,probability:float,length:int):
+def generatelist(start:int,n:int,probability:float,length:int):
     list = []
-    k = round(n/10) #rozpietosc podzbioru
+    k = round((n-start)/10) #rozpietosc podzbioru
 
     i = 0
     while(i<length):
@@ -31,7 +45,7 @@ def generatelist(n:int,probability:float,length:int):
             j=0
             p =random.randrange(5*k)
 
-            startnumber = random.randrange(n - k)
+            startnumber = random.randrange(start,n - k)
             while j < p and i<length:
                 liczba = random.randint(startnumber,startnumber+k)
                 if liczba==0:
@@ -43,7 +57,7 @@ def generatelist(n:int,probability:float,length:int):
                 j+=1
 
         else:
-            list.append(random.randrange(n))
+            list.append(random.randrange(start,n))
             i=i+1
 
 
@@ -51,6 +65,22 @@ def generatelist(n:int,probability:float,length:int):
 
 
     return list
+
+def generate2d(array:np.ndarray,Probability:float):
+    ret:[list]=[]
+    rozpietosci = (array[:,0])
+    dlugosci =(array[:,1])
+    size = len(rozpietosci)
+
+    start=0
+    for i in range(size):
+        ret.append(generate(generatelist(start,rozpietosci[i]+start,Probability,dlugosci[i]))[1]) #100 mozna zmienic na cos losowego.
+        start+=rozpietosci[i]
+        print(ret[i])
+    return ret
+
+
+
 
 
 
