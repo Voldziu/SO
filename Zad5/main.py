@@ -11,5 +11,6 @@ from View import *
 
 showObciazanie()
 showSrednia_variance()
+showLiczbaMigracjiiZapytan()
 
 

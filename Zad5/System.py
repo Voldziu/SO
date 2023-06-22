@@ -17,6 +17,8 @@ class System():
         i=0
         gHistoriaObciazen=[]
         gHistoriaOH=[]
+        gIlemigracji=[]
+        gIleZapytan=[]
         while(i<TickLen):
             if(random.random()<self.prob):
 
@@ -43,9 +45,11 @@ class System():
         for alg in self.Alglist:
             gHistoriaObciazen.append(alg.HistoriaObciazen)
             gHistoriaOH.append(alg.HistoriaOverHeating)
+            gIlemigracji.append(alg.IleMigracji)
+            gIleZapytan.append(alg.IleZapytan)
         print(gHistoriaOH)
         print(gHistoriaObciazen)
-        return [gHistoriaOH,gHistoriaObciazen]
+        return [gHistoriaOH,gHistoriaObciazen,gIlemigracji,gIleZapytan]
 
 
 
